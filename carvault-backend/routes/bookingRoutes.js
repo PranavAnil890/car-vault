@@ -89,6 +89,84 @@ router.put('/:id', async (req, res) => {
 
         await booking.save();
 
+         if (
+            booking.status === 'Rejected' &&
+            oldStatus !== 'Rejected'
+        ) {
+
+            const customer = await User.findById(
+                booking.userId
+            );
+
+            if (customer) {
+
+                try {
+
+                    await transporter.sendMail({
+
+                        from: process.env.EMAIL_USER,
+
+                        to: customer.email,
+
+                        subject: 'CarVault - Booking Rejected',
+
+                        html: `
+                            <h2>Booking Rejected</h2>
+
+                            <p>Hello ${customer.name},</p>
+
+                            <p>
+                                Unfortunately, your service booking has been
+                                rejected by the service center.
+                            </p>
+
+                            <p>
+                                <strong>Service:</strong>
+                                ${booking.serviceId.serviceName}
+                            </p>
+
+                            <p>
+                                <strong>Date:</strong>
+                                ${new Date(booking.date).toLocaleDateString()}
+                            </p>
+
+                            <p>
+                                <strong>Time:</strong>
+                                ${booking.time}
+                            </p>
+
+                            <p>
+                                Please log in to CarVault and choose another
+                                available service center or time slot.
+                            </p>
+
+                            <p>
+                                Regards,<br>
+                                CarVault Team
+                            </p>
+                        `
+
+                    });
+
+                    console.log(
+                        'Rejection email sent successfully'
+                    );
+
+                } catch (emailError) {
+
+                    console.log(
+                        'Rejection email sending failed:',
+                        emailError.message
+                    );
+
+                }
+
+            }
+
+        }
+
+
+
         if (
             booking.status === 'Completed' &&
             oldStatus !== 'Completed'
