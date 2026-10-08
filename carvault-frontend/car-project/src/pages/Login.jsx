@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
+import loginBg from '../assets/login-bg.png';
+
 const Login = () => {
 
     const navigate = useNavigate();
@@ -64,9 +66,23 @@ const Login = () => {
 
     return (
 
-        <div className="min-h-[calc(100vh-80px)] bg-[#020617] flex items-center justify-center px-4">
+        <div
+            className="min-h-[calc(100vh-80px)] bg-cover bg-center bg-no-repeat flex items-center justify-end px-6 md:px-16 lg:px-24 relative"
+            style={{
+                backgroundImage: `url(${loginBg})`
+            }}
+        >
 
-            <div className="w-full max-w-md">
+            {/* Dark Overlay */}
+
+            <div className="absolute inset-0 bg-black/35"></div>
+
+
+            {/* Login Content */}
+
+            <div className="relative z-10 w-full max-w-md">
+
+                {/* Heading */}
 
                 <div className="text-center mb-7">
 
@@ -74,15 +90,18 @@ const Login = () => {
                         LOGIN TO CARVAULT
                     </h1>
 
-                    <p className="mt-3 text-slate-400">
+                    <p className="mt-3 text-slate-300">
                         Access your car ownership dashboard
                     </p>
 
                 </div>
 
-                <div className="card w-full bg-[#0f172a] shadow-xl border border-blue-900/30">
 
-                    <div className="card-body">
+                {/* Blurred Glass Login Box */}
+
+                <div className="w-full bg-[#020617]/35 backdrop-blur-xl shadow-2xl rounded-2xl border border-white/20">
+
+                    <div className="p-6">
 
                         <form
                             onSubmit={handleLogin}
@@ -93,10 +112,12 @@ const Login = () => {
 
                             <div>
 
-                                <label className="label">
-                                    <span className="label-text text-slate-300">
+                                <label className="block mb-2">
+
+                                    <span className="text-slate-200">
                                         Email
                                     </span>
+
                                 </label>
 
                                 <input
@@ -106,7 +127,7 @@ const Login = () => {
                                     onChange={(e) =>
                                         setEmail(e.target.value)
                                     }
-                                    className="input input-bordered w-full bg-[#020617] text-white border-slate-700"
+                                    className="w-full h-12 px-4 rounded-lg bg-black/30 backdrop-blur-sm text-white border border-white/20 outline-none focus:border-blue-400 placeholder:text-slate-300"
                                     required
                                 />
 
@@ -117,10 +138,12 @@ const Login = () => {
 
                             <div>
 
-                                <label className="label">
-                                    <span className="label-text text-slate-300">
+                                <label className="block mb-2">
+
+                                    <span className="text-slate-200">
                                         Password
                                     </span>
+
                                 </label>
 
                                 <div className="relative">
@@ -136,19 +159,24 @@ const Login = () => {
                                         onChange={(e) =>
                                             setPassword(e.target.value)
                                         }
-                                        className="input input-bordered w-full pr-12 bg-[#020617] text-white border-slate-700"
+                                        className="w-full h-12 px-4 pr-12 rounded-lg bg-black/30 backdrop-blur-sm text-white border border-white/20 outline-none focus:border-blue-400 placeholder:text-slate-300"
                                         required
                                     />
+
+
+                                    {/* Password Visibility Button */}
 
                                     <button
                                         type="button"
                                         onClick={() =>
                                             setShowPassword(!showPassword)
                                         }
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-400"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-blue-400"
                                     >
 
                                         {showPassword ? (
+
+                                            /* Eye Open */
 
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -158,19 +186,24 @@ const Login = () => {
                                                 stroke="currentColor"
                                                 className="w-5 h-5"
                                             >
+
                                                 <path
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
                                                     d="M2.036 12.322a1.012 1.012 0 010-.644C3.423 7.51 7.36 5 12 5c4.64 0 8.577 2.51 9.964 6.678.071.213.071.433 0 .644C20.577 16.49 16.64 19 12 19c-4.64 0-8.577-2.51-9.964-6.678z"
                                                 />
+
                                                 <path
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
                                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                                 />
+
                                             </svg>
 
                                         ) : (
+
+                                            /* Eye Closed */
 
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -180,11 +213,13 @@ const Login = () => {
                                                 stroke="currentColor"
                                                 className="w-5 h-5"
                                             >
+
                                                 <path
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
-                                                    d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.443 7.244 19.5 12 19.5c.993 0 1.953-.138 2.852-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.774 3.057 10.066 7.5a10.52 10.52 0 01-4.293 5.293M6.228 6.228L3 3m3.228 3.228l3.64 3.64m4.264 4.264l3.64 3.64M14.5 14.5a3 3 0 01-4.243-4.243"
+                                                    d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.443 7.244 19.5 12 19.5c.993 0 1.953-.138 2.852-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.774 3.057 10.066 7.5a10.52 10.52 0 00-4.293 5.293M6.228 6.228L3 3m3.228 3.228l3.64 3.64m4.264 4.264l3.64 3.64M14.5 14.5a3 3 0 01-4.243-4.243"
                                                 />
+
                                             </svg>
 
                                         )}
@@ -210,11 +245,11 @@ const Login = () => {
                             </div>
 
 
-                            {/* Login */}
+                            {/* Login Button */}
 
                             <button
                                 type="submit"
-                                className="btn btn-primary w-full mt-2"
+                                className="w-full h-12 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold transition"
                             >
                                 Login
                             </button>
@@ -222,9 +257,9 @@ const Login = () => {
                         </form>
 
 
-                        {/* Register */}
+                        {/* Register Link */}
 
-                        <p className="text-center text-sm text-slate-400 mt-6">
+                        <p className="text-center text-sm text-slate-300 mt-6">
 
                             Don't have an account?{" "}
 

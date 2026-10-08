@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import loginBg from '../assets/login-bg.png';
+
 const Register = () => {
 
     const navigate = useNavigate();
@@ -42,13 +44,27 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] flex items-center justify-center px-4">
 
-            <div className="w-full max-w-md bg-[#0f172a] p-6 rounded-lg">
+        <div
+            className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center px-4 relative"
+            style={{
+                backgroundImage: `url(${loginBg})`
+            }}
+        >
+
+            {/* Dark overlay */}
+
+            <div className="absolute inset-0 bg-black/45"></div>
+
+
+            {/* Register Card */}
+
+            <div className="relative z-10 w-full max-w-md bg-[#020617]/70 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-2xl">
 
                 <h2 className="text-3xl font-bold text-white text-center mb-6">
                     Create Account
                 </h2>
+
 
                 <form
                     onSubmit={handleRegister}
@@ -62,7 +78,7 @@ const Register = () => {
                         placeholder="Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="input input-bordered w-full bg-[#020617] text-white"
+                        className="input input-bordered w-full bg-[#020617]/70 text-white border-white/10"
                         required
                     />
 
@@ -74,7 +90,7 @@ const Register = () => {
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="input input-bordered w-full bg-[#020617] text-white"
+                        className="input input-bordered w-full bg-[#020617]/70 text-white border-white/10"
                         required
                     />
 
@@ -86,7 +102,7 @@ const Register = () => {
                         placeholder="Phone Number"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="input input-bordered w-full bg-[#020617] text-white"
+                        className="input input-bordered w-full bg-[#020617]/70 text-white border-white/10"
                         required
                     />
 
@@ -100,9 +116,12 @@ const Register = () => {
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="input input-bordered w-full bg-[#020617] text-white pr-12"
+                            className="input input-bordered w-full bg-[#020617]/70 text-white border-white/10 pr-12"
                             required
                         />
+
+
+                        {/* Password visibility button */}
 
                         <button
                             type="button"
@@ -113,6 +132,8 @@ const Register = () => {
                         >
 
                             {showPassword ? (
+
+                                /* Eye open */
 
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -139,6 +160,8 @@ const Register = () => {
 
                             ) : (
 
+                                /* Eye closed */
+
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -151,7 +174,7 @@ const Register = () => {
                                     <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.443 7.244 19.5 12 19.5c.993 0 1.953-.138 2.852-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.774 3.057 10.066 7.5a10.52 10.52 0 01-4.293 5.293M6.228 6.228L3 3m3.228 3.228l3.64 3.64m4.264 4.264l3.64 3.64M14.5 14.5a3 3 0 01-4.243-4.243"
+                                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.443 7.244 19.5 12 19.5c.993 0 1.953-.138 2.852-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.774 3.057 10.066 7.5a10.52 10.52 0 00-4.293 5.293M6.228 6.228L3 3m3.228 3.228l3.64 3.64m4.264 4.264l3.64 3.64M14.5 14.5a3 3 0 01-4.243-4.243"
                                     />
 
                                 </svg>
@@ -163,7 +186,7 @@ const Register = () => {
                     </div>
 
 
-                    {/* Register */}
+                    {/* Register button */}
 
                     <button
                         type="submit"
@@ -175,13 +198,15 @@ const Register = () => {
                 </form>
 
 
-                <p className="text-center text-slate-400 mt-5">
+                {/* Login link */}
+
+                <p className="text-center text-slate-300 mt-5">
 
                     Already have an account?{' '}
 
                     <Link
                         to="/login"
-                        className="text-blue-400"
+                        className="text-blue-400 hover:text-blue-300"
                     >
                         Login
                     </Link>
