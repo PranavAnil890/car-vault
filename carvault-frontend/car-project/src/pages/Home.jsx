@@ -8,8 +8,6 @@ const Home = () => {
         <div className="bg-[#020617] text-white min-h-screen">
 
 
-            {/* Hero Section */}
-
             <section className="min-h-[calc(100vh-80px)] flex items-center">
 
                 <div className="max-w-7xl mx-auto px-6 py-16 w-full">
@@ -88,9 +86,6 @@ const Home = () => {
 
             </section>
 
-
-
-            {/* Why CarVault */}
 
             <section className="py-20 bg-[#0f172a]">
 
@@ -268,9 +263,6 @@ const Home = () => {
             </section>
 
 
-
-            {/* How It Works */}
-
             <section className="py-20">
 
                 <div className="max-w-7xl mx-auto px-6">
@@ -285,9 +277,6 @@ const Home = () => {
 
 
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-
-
-                        {/* Step 01 */}
 
                         <div className="text-center">
 
@@ -306,9 +295,6 @@ const Home = () => {
                         </div>
 
 
-
-                        {/* Step 02 */}
-
                         <div className="text-center">
 
                             <div className="text-blue-500 text-4xl font-bold">
@@ -326,9 +312,6 @@ const Home = () => {
                         </div>
 
 
-
-                        {/* Step 03 */}
-
                         <div className="text-center">
 
                             <div className="text-blue-500 text-4xl font-bold">
@@ -345,9 +328,6 @@ const Home = () => {
 
                         </div>
 
-
-
-                        {/* Step 04 */}
 
                         <div className="text-center">
 

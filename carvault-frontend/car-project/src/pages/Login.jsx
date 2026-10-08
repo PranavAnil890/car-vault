@@ -73,16 +73,10 @@ const Login = () => {
             }}
         >
 
-            {/* Background Overlay */}
-
             <div className="absolute inset-0 bg-black/30"></div>
 
 
-            {/* Login Content */}
-
             <div className="relative z-10 w-full max-w-sm">
-
-                {/* Heading */}
 
                 <div className="text-center mb-5">
 
@@ -96,9 +90,6 @@ const Login = () => {
 
                 </div>
 
-
-                {/* Glass Login Box */}
-
                 <div className="w-full bg-[#020617]/25 backdrop-blur-lg shadow-2xl rounded-3xl border border-white/20">
 
                     <div className="p-6 md:p-7">
@@ -107,8 +98,6 @@ const Login = () => {
                             onSubmit={handleLogin}
                             className="space-y-4"
                         >
-
-                            {/* Email */}
 
                             <div>
 
@@ -132,9 +121,6 @@ const Login = () => {
                                 />
 
                             </div>
-
-
-                            {/* Password */}
 
                             <div>
 
@@ -226,9 +212,6 @@ const Login = () => {
 
                             </div>
 
-
-                            {/* Forgot Password */}
-
                             <div className="text-right pt-1">
 
                                 <Link
@@ -240,9 +223,6 @@ const Login = () => {
 
                             </div>
 
-
-                            {/* Login Button */}
-
                             <button
                                 type="submit"
                                 className="w-full h-11 rounded-xl bg-blue-600/90 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-900/30 transition"
@@ -251,9 +231,6 @@ const Login = () => {
                             </button>
 
                         </form>
-
-
-                        {/* Register */}
 
                         <p className="text-center text-sm text-slate-300 mt-5">
 

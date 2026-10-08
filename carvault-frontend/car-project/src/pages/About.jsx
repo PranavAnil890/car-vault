@@ -6,9 +6,6 @@ const About = () => {
 
         <div className="min-h-screen bg-[#020b1d] text-white">
 
-
-            {/* ABOUT HEADING */}
-
             <section className="pt-14 pb-8">
 
                 <div className="max-w-7xl mx-auto px-6 text-center">
@@ -26,9 +23,6 @@ const About = () => {
             </section>
 
 
-
-            {/* WHAT IS CARVAULT */}
-
             <section className="pb-10">
 
                 <div className="max-w-7xl mx-auto px-6">
@@ -36,9 +30,6 @@ const About = () => {
                     <div className="border border-blue-600 rounded-xl overflow-hidden bg-[#041631]">
 
                         <div className="grid grid-cols-1 lg:grid-cols-2">
-
-
-                            {/* CONTENT */}
 
                             <div className="p-8 md:p-10 flex flex-col justify-center">
 
@@ -65,9 +56,6 @@ const About = () => {
 
                             </div>
 
-
-                            {/* CAR IMAGE */}
-
                             <div className="h-[280px] lg:h-[300px]">
 
                                 <img
@@ -87,9 +75,6 @@ const About = () => {
             </section>
 
 
-
-            {/* MAIN FEATURES */}
-
             <section className="py-8">
 
                 <div className="max-w-7xl mx-auto px-6">
@@ -102,8 +87,6 @@ const About = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
-
-                        {/* VEHICLES */}
 
                         <div className="h-52 border border-blue-600 rounded-xl bg-[#041631] flex flex-col items-center justify-center">
 
@@ -118,9 +101,6 @@ const About = () => {
                         </div>
 
 
-
-                        {/* SERVICES */}
-
                         <div className="h-52 border border-blue-600 rounded-xl bg-[#041631] flex flex-col items-center justify-center">
 
                             <div className="w-24 h-24 rounded-full border-2 border-cyan-400 bg-cyan-400/10 flex items-center justify-center text-5xl">
@@ -134,9 +114,6 @@ const About = () => {
                         </div>
 
 
-
-                        {/* BOOKING */}
-
                         <div className="h-52 border border-blue-600 rounded-xl bg-[#041631] flex flex-col items-center justify-center">
 
                             <div className="w-24 h-24 rounded-full border-2 border-purple-500 bg-purple-500/10 flex items-center justify-center text-5xl">
@@ -148,10 +125,6 @@ const About = () => {
                             </h3>
 
                         </div>
-
-
-
-                        {/* HISTORY */}
 
                         <div className="h-52 border border-blue-600 rounded-xl bg-[#041631] flex flex-col items-center justify-center">
 
@@ -173,9 +146,6 @@ const About = () => {
             </section>
 
 
-
-            {/* HOW CARVAULT WORKS */}
-
             <section className="py-12">
 
                 <div className="max-w-7xl mx-auto px-6">
@@ -188,8 +158,6 @@ const About = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
-
-                        {/* OWN */}
 
                         <div className="flex flex-col items-center">
 
@@ -216,9 +184,6 @@ const About = () => {
                         </div>
 
 
-
-                        {/* MAINTAIN */}
-
                         <div className="flex flex-col items-center">
 
                             <div className="w-36 h-36 rounded-full border-2 border-cyan-400 bg-cyan-400/10 flex flex-col items-center justify-center">
@@ -240,9 +205,6 @@ const About = () => {
                         </div>
 
 
-
-                        {/* SERVICE */}
-
                         <div className="flex flex-col items-center">
 
                             <div className="w-36 h-36 rounded-full border-2 border-purple-500 bg-purple-500/10 flex flex-col items-center justify-center">
@@ -263,9 +225,6 @@ const About = () => {
 
                         </div>
 
-
-
-                        {/* TRACK */}
 
                         <div className="flex flex-col items-center">
 
@@ -291,9 +250,6 @@ const About = () => {
                     </div>
 
 
-
-                    {/* ARROWS */}
-
                     <div className="hidden md:flex justify-between max-w-5xl mx-auto -mt-28 px-20 pointer-events-none">
 
                         <span className="text-blue-500 text-4xl">
@@ -314,10 +270,6 @@ const About = () => {
                 </div>
 
             </section>
-
-
-
-            {/* FINISHING LINE BEFORE EXISTING FOOTER */}
 
             <div className="max-w-7xl mx-auto px-6 pt-6 pb-12">
 

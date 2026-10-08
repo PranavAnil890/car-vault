@@ -66,14 +66,9 @@ const Services = () => {
 
         <div className="min-h-screen bg-[#020617] text-white">
 
-            {/* Services Section */}
-
             <section className="py-16">
 
                 <div className="max-w-6xl mx-auto px-6">
-
-
-                    {/* Heading */}
 
                     <div className="text-center mb-12">
 
@@ -87,9 +82,6 @@ const Services = () => {
 
                     </div>
 
-
-                    {/* Service Cards */}
-
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
                         {services.map((service, index) => (
@@ -102,35 +94,23 @@ const Services = () => {
                                 <div className="card-body">
 
 
-                                    {/* Icon */}
-
                                     <div className="text-5xl mb-4">
                                         {service.icon}
                                     </div>
 
-
-                                    {/* Service Name */}
 
                                     <h2 className="text-2xl font-bold text-white">
                                         {service.name}
                                     </h2>
 
 
-                                    {/* Price */}
-
                                     <p className="text-3xl font-bold text-blue-400 mt-6">
                                         {service.price}
                                     </p>
 
-
-                                    {/* Duration */}
-
                                     <p className="text-slate-400 mt-2">
                                         {service.duration}
                                     </p>
-
-
-                                    {/* Login Button */}
 
                                     <div className="card-actions mt-6">
 

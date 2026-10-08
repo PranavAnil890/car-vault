@@ -9,6 +9,7 @@ const Booking = () => {
 
     // Get bookings
     const getBookings = async () => {
+
         try {
 
             const response = await axios.get(
@@ -24,13 +25,18 @@ const Booking = () => {
             setBookings(myBookings);
 
         } catch (error) {
+
             console.log(error);
+
         }
+
     };
 
 
     useEffect(() => {
+
         getBookings();
+
     }, []);
 
 
@@ -53,9 +59,11 @@ const Booking = () => {
         } catch (error) {
 
             console.log(error);
+
             alert('Failed to update booking');
 
         }
+
     };
 
 
@@ -75,9 +83,11 @@ const Booking = () => {
         } catch (error) {
 
             console.log(error);
+
             alert('Failed to delete booking');
 
         }
+
     };
 
 
@@ -139,18 +149,22 @@ const Booking = () => {
                                 {/* Vehicle */}
 
                                 <p className="text-slate-300 mt-4">
+
                                     🚗 {booking.vehicleId?.brand || ''}
                                     {' '}
                                     {booking.vehicleId?.model || ''}
                                     {' | '}
                                     {booking.vehicleId?.registrationNumber || ''}
+
                                 </p>
 
 
                                 {/* Service */}
 
                                 <p className="text-slate-300 mt-5">
+
                                     🔧 {booking.serviceId?.serviceName || 'Service'}
+
                                 </p>
 
 
@@ -174,7 +188,9 @@ const Booking = () => {
                                 {/* Status */}
 
                                 <p className="mt-5">
+
                                     <b>Status:</b> {booking.status}
+
                                 </p>
 
 
@@ -182,11 +198,14 @@ const Booking = () => {
 
                                 <div className="mt-6">
 
+
                                     {/* Pending */}
 
                                     {booking.status === 'Pending' && (
 
                                         <div className="flex gap-3">
+
+                                            {/* Confirm */}
 
                                             <button
                                                 onClick={() =>
@@ -200,11 +219,14 @@ const Booking = () => {
                                                 Confirm
                                             </button>
 
+
+                                            {/* Reject */}
+
                                             <button
                                                 onClick={() =>
                                                     changeStatus(
                                                         booking._id,
-                                                        'Cancelled'
+                                                        'Rejected'
                                                     )
                                                 }
                                                 className="btn btn-error"
@@ -213,6 +235,7 @@ const Booking = () => {
                                             </button>
 
                                         </div>
+
                                     )}
 
 
@@ -276,7 +299,8 @@ const Booking = () => {
                                     {/* Delete */}
 
                                     {(booking.status === 'Completed' ||
-                                        booking.status === 'Cancelled') && (
+                                        booking.status === 'Cancelled' ||
+                                        booking.status === 'Rejected') && (
 
                                         <button
                                             onClick={() =>
@@ -302,7 +326,9 @@ const Booking = () => {
             </div>
 
         </div>
+
     );
+
 };
 
 export default Booking;

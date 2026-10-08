@@ -52,12 +52,8 @@ const Register = () => {
             }}
         >
 
-            {/* Dark overlay */}
-
             <div className="absolute inset-0 bg-black/45"></div>
 
-
-            {/* Register Card */}
 
             <div className="relative z-10 w-full max-w-md bg-[#020617]/70 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-2xl">
 
@@ -71,8 +67,6 @@ const Register = () => {
                     className="space-y-4"
                 >
 
-                    {/* Name */}
-
                     <input
                         type="text"
                         placeholder="Name"
@@ -81,9 +75,6 @@ const Register = () => {
                         className="input input-bordered w-full bg-[#020617]/70 text-white border-white/10"
                         required
                     />
-
-
-                    {/* Email */}
 
                     <input
                         type="email"
@@ -94,9 +85,6 @@ const Register = () => {
                         required
                     />
 
-
-                    {/* Phone */}
-
                     <input
                         type="tel"
                         placeholder="Phone Number"
@@ -105,9 +93,6 @@ const Register = () => {
                         className="input input-bordered w-full bg-[#020617]/70 text-white border-white/10"
                         required
                     />
-
-
-                    {/* Password */}
 
                     <div className="relative">
 
@@ -119,9 +104,6 @@ const Register = () => {
                             className="input input-bordered w-full bg-[#020617]/70 text-white border-white/10 pr-12"
                             required
                         />
-
-
-                        {/* Password visibility button */}
 
                         <button
                             type="button"
@@ -186,8 +168,6 @@ const Register = () => {
                     </div>
 
 
-                    {/* Register button */}
-
                     <button
                         type="submit"
                         className="btn btn-primary w-full"
@@ -196,9 +176,6 @@ const Register = () => {
                     </button>
 
                 </form>
-
-
-                {/* Login link */}
 
                 <p className="text-center text-slate-300 mt-5">
 

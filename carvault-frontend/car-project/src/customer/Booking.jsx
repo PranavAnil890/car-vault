@@ -18,8 +18,6 @@ const Booking = () => {
     const serviceId = params.get('serviceId');
     const serviceCenterId = params.get('serviceCenterId');
 
-
-    // Get bookings
     useEffect(() => {
 
         if (location.pathname === '/customer/bookings') {
