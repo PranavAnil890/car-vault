@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const About = () => {
@@ -119,6 +118,7 @@ const About = () => {
                         </div>
 
 
+
                         {/* SERVICES */}
 
                         <div className="h-52 border border-blue-600 rounded-xl bg-[#041631] flex flex-col items-center justify-center">
@@ -134,6 +134,7 @@ const About = () => {
                         </div>
 
 
+
                         {/* BOOKING */}
 
                         <div className="h-52 border border-blue-600 rounded-xl bg-[#041631] flex flex-col items-center justify-center">
@@ -147,6 +148,7 @@ const About = () => {
                             </h3>
 
                         </div>
+
 
 
                         {/* HISTORY */}
@@ -289,6 +291,7 @@ const About = () => {
                     </div>
 
 
+
                     {/* ARROWS */}
 
                     <div className="hidden md:flex justify-between max-w-5xl mx-auto -mt-28 px-20 pointer-events-none">
@@ -314,45 +317,13 @@ const About = () => {
 
 
 
-            {/* FOOTER */}
+            {/* FINISHING LINE BEFORE EXISTING FOOTER */}
 
-            <footer className="border-t border-blue-900/50 bg-[#030d20] mt-8">
+            <div className="max-w-7xl mx-auto px-6 pt-6 pb-12">
 
-                <div className="max-w-7xl mx-auto px-6 py-6">
+                <div className="h-px bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
 
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-
-
-                        {/* Logo */}
-
-                        <div className="text-2xl font-bold">
-
-                            🚗 Car<span className="text-blue-500">
-                                Vault
-                            </span>
-
-                        </div>
-
-
-                        {/* Description */}
-
-                        <p className="text-slate-400">
-                            Smart car ownership & service platform
-                        </p>
-
-
-                        {/* Copyright */}
-
-                        <p className="text-slate-500 text-sm">
-                            © 2026 CarVault
-                        </p>
-
-
-                    </div>
-
-                </div>
-
-            </footer>
+            </div>
 
 
         </div>
@@ -362,5 +333,3 @@ const About = () => {
 };
 
 export default About;
-
-
