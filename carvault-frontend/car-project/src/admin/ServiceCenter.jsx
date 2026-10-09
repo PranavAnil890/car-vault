@@ -1,9 +1,10 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const ServiceCenter = () => {
-
     const [centers, setCenters] = useState([]);
+    const [reviews, setReviews] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [editId, setEditId] = useState(null);
     const [viewCenter, setViewCenter] = useState(null);
@@ -19,15 +20,19 @@ const ServiceCenter = () => {
         pincode: ''
     });
 
-    // Get centers
+    // Get service centers and customer reviews
     const getCenters = async () => {
         try {
-            const response = await axios.get(
+            const centerRes = await axios.get(
                 'http://localhost:3000/service-centers'
             );
 
-            setCenters(response.data);
+            const reviewRes = await axios.get(
+                'http://localhost:3000/review'
+            );
 
+            setCenters(centerRes.data);
+            setReviews(reviewRes.data);
         } catch (error) {
             console.log(error);
         }
@@ -37,6 +42,29 @@ const ServiceCenter = () => {
         getCenters();
     }, []);
 
+    // Calculate customer rating
+    const getRating = (centerId) => {
+        const centerReviews = reviews.filter((review) => {
+            const reviewCenterId =
+                typeof review.serviceCenterId === 'object'
+                    ? review.serviceCenterId?._id
+                    : review.serviceCenterId;
+
+            return String(reviewCenterId) === String(centerId);
+        });
+
+        if (centerReviews.length === 0) {
+            return '0.0';
+        }
+
+        const total = centerReviews.reduce(
+            (sum, review) => sum + Number(review.rating || 0),
+            0
+        );
+
+        return (total / centerReviews.length).toFixed(1);
+    };
+
     // Input change
     const handleChange = (e) => {
         setFormData({
@@ -45,9 +73,8 @@ const ServiceCenter = () => {
         });
     };
 
-    // Add
+    // Add center
     const addCenter = () => {
-
         setEditId(null);
 
         setFormData({
@@ -64,44 +91,46 @@ const ServiceCenter = () => {
         setShowForm(true);
     };
 
-    // Edit
+    // Edit center
     const editCenter = (center) => {
-
         setEditId(center._id);
 
         setFormData({
-            name: center.name,
-            email: center.email,
+            name: center.name || '',
+            email: center.email || '',
             password: '',
-            phone: center.phone,
-            address: center.address,
-            city: center.city,
-            state: center.state,
-            pincode: center.pincode
+            phone: center.phone || '',
+            address: center.address || '',
+            city: center.city || '',
+            state: center.state || '',
+            pincode: center.pincode || ''
         });
 
         setShowForm(true);
     };
 
-    // Save
+    // Create or update center
     const handleSubmit = async (e) => {
-
         e.preventDefault();
 
         try {
-
             if (editId) {
-
                 await axios.put(
                     `http://localhost:3000/service-centers/${editId}`,
-                    formData
+                    {
+                        name: formData.name,
+                        email: formData.email,
+                        phone: formData.phone,
+                        address: formData.address,
+                        city: formData.city,
+                        state: formData.state,
+                        pincode: formData.pincode
+                    }
                 );
 
                 alert('Service center updated');
-
             } else {
-
-                const user = await axios.post(
+                const userRes = await axios.post(
                     'http://localhost:3000/users/service-center/register',
                     {
                         name: formData.name,
@@ -121,7 +150,7 @@ const ServiceCenter = () => {
                         state: formData.state,
                         pincode: formData.pincode,
                         rating: 0,
-                        userId: user.data.user.id
+                        userId: userRes.data.user.id
                     }
                 );
 
@@ -131,92 +160,62 @@ const ServiceCenter = () => {
             setShowForm(false);
             setEditId(null);
             getCenters();
-
         } catch (error) {
-
             console.log(error);
-
-            alert(
-                error.response?.data?.message ||
-                'Operation failed'
-            );
+            alert(error.response?.data?.message || 'Operation failed');
         }
     };
 
-    // Delete
+    // Delete center
     const deleteCenter = async (id) => {
-
         if (!window.confirm('Delete this service center?')) {
             return;
         }
 
         try {
-
             await axios.delete(
                 `http://localhost:3000/service-centers/${id}`
             );
 
             alert('Service center deleted');
             getCenters();
-
         } catch (error) {
-
             console.log(error);
             alert('Delete failed');
         }
     };
 
     return (
-
         <div className="ml-64 min-h-screen bg-[#020617] text-white p-8">
-
             <div className="max-w-6xl mx-auto">
 
-                {/* Heading */}
-
                 <div className="flex justify-between mb-8">
-
                     <div>
-
                         <h1 className="text-3xl font-bold">
                             Service Centers
                         </h1>
-
                         <p className="text-slate-400 mt-2">
                             Manage registered service centers
                         </p>
-
                     </div>
 
-                    <button
-                        onClick={addCenter}
-                        className="btn btn-primary"
-                    >
+                    <button onClick={addCenter} className="btn btn-primary">
                         + Add Center
                     </button>
-
                 </div>
 
-
-                {/* Centers */}
-
+                {/* Service center cards */}
                 {centers.length === 0 ? (
-
                     <div className="bg-[#0f172a] p-8 rounded-xl text-center">
                         No service centers found.
                     </div>
-
                 ) : (
-
                     <div className="grid md:grid-cols-2 gap-6">
-
                         {centers.map((center) => (
-
                             <div
                                 key={center._id}
                                 className="bg-[#0f172a] p-6 rounded-xl"
                             >
-
                                 <h2 className="text-xl font-bold">
                                     {center.name}
                                 </h2>
@@ -225,81 +224,55 @@ const ServiceCenter = () => {
                                     {center.city}
                                 </p>
 
+                                {/* Customer average rating */}
                                 <p className="text-yellow-400 mt-2">
-                                    ⭐ {center.rating || '0.0'}
+                                    ⭐ {getRating(center._id)}
                                 </p>
 
-
-                                {/* Profile Updated */}
-
                                 {center.profileUpdatedAt && (
-
                                     <p className="text-yellow-400 mt-3">
                                         ⚠️ Profile Updated
                                         <br />
-
                                         <span className="text-slate-400 text-sm">
                                             {new Date(
                                                 center.profileUpdatedAt
                                             ).toLocaleString()}
                                         </span>
                                     </p>
-
                                 )}
 
-
-                                {/* Buttons */}
-
                                 <div className="flex gap-3 mt-5">
-
                                     <button
-                                        onClick={() =>
-                                            setViewCenter(center)
-                                        }
+                                        onClick={() => setViewCenter(center)}
                                         className="btn btn-sm btn-outline"
                                     >
                                         View
                                     </button>
 
                                     <button
-                                        onClick={() =>
-                                            editCenter(center)
-                                        }
+                                        onClick={() => editCenter(center)}
                                         className="btn btn-sm btn-primary"
                                     >
                                         Edit
                                     </button>
 
                                     <button
-                                        onClick={() =>
-                                            deleteCenter(center._id)
-                                        }
+                                        onClick={() => deleteCenter(center._id)}
                                         className="btn btn-sm btn-error"
                                     >
                                         Delete
                                     </button>
-
                                 </div>
-
                             </div>
-
                         ))}
-
                     </div>
-
                 )}
-
             </div>
 
-
-            {/* View Popup */}
-
+            {/* View popup */}
             {viewCenter && (
-
-                <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-
+                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
                     <div className="bg-[#0f172a] p-6 rounded-xl w-full max-w-lg">
-
                         <h2 className="text-2xl font-bold mb-5">
                             Service Center Details
                         </h2>
@@ -311,8 +284,9 @@ const ServiceCenter = () => {
                         <p>City: {viewCenter.city}</p>
                         <p>State: {viewCenter.state}</p>
                         <p>Pincode: {viewCenter.pincode}</p>
-                        <p>
-                            Rating: ⭐ {viewCenter.rating || '0.0'}
+
+                        <p className="text-yellow-400 mt-3">
+                            Rating: ⭐ {getRating(viewCenter._id)}
                         </p>
 
                         <button
@@ -321,30 +295,19 @@ const ServiceCenter = () => {
                         >
                             Close
                         </button>
-
                     </div>
-
                 </div>
-
             )}
 
-
-            {/* Add / Edit Popup */}
-
+            {/* Add / Edit popup */}
             {showForm && (
-
-                <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-
-                    <div className="bg-[#0f172a] p-6 rounded-xl w-full max-w-lg">
-
+                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+                    <div className="bg-[#0f172a] p-6 rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
                         <h2 className="text-2xl font-bold mb-5">
-                            {editId
-                                ? 'Edit Service Center'
-                                : 'Add Service Center'}
+                            {editId ? 'Edit Service Center' : 'Add Service Center'}
                         </h2>
 
                         <form onSubmit={handleSubmit}>
-
                             <input
                                 name="name"
                                 placeholder="Name"
@@ -365,7 +328,6 @@ const ServiceCenter = () => {
                             />
 
                             {!editId && (
-
                                 <input
                                     name="password"
                                     type="password"
@@ -375,7 +337,6 @@ const ServiceCenter = () => {
                                     className="input input-bordered w-full mb-3 bg-[#020617]"
                                     required
                                 />
-
                             )}
 
                             <input
@@ -424,7 +385,6 @@ const ServiceCenter = () => {
                             />
 
                             <div className="flex justify-end gap-3">
-
                                 <button
                                     type="button"
                                     onClick={() => setShowForm(false)}
@@ -433,25 +393,17 @@ const ServiceCenter = () => {
                                     Cancel
                                 </button>
 
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                >
+                                <button type="submit" className="btn btn-primary">
                                     {editId ? 'Update' : 'Create'}
                                 </button>
-
                             </div>
-
                         </form>
-
                     </div>
-
                 </div>
-
             )}
-
         </div>
     );
 };
 
 export default ServiceCenter;
+
