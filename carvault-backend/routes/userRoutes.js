@@ -209,6 +209,15 @@ router.post('/login', async (req, res) => {
             })
         }
 
+        if (
+            existingUser.role === 'customer' &&
+             existingUser.status === 'inactive'
+      ) {
+             return res.status(403).json({
+             message: 'Your account has been deactivated. Please contact the administrator.'
+        });
+    }
+
             const passwordMatch = await bcrypt.compare(
                 password,
                 existingUser.password
@@ -418,37 +427,50 @@ router.post('/reset-password', async (req, res) => {
 
 // put the user
 
-router.put('/:id', async (req, res) => {
-    try {
-
-        const updateUser = await user.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {
-                returnDocument: 'after',
-                runValidators: true
-            }
-        );
-
-
-        if (!updateUser) {
-            return res.status(404).json({
-                message: 'user not found'
+router.put('/:id/deactivate', async (req, res) => { 
+    try { const customer = await user.findOne({ 
+        _id: req.params.id, 
+        role: 'customer'
+     }); 
+     if (!customer) {
+         return res.status(404).json({
+             message: 'Customer not found' 
             });
-        }
+         } 
+         customer.status = 'inactive';
+          await customer.save();
 
-
-        res.json(updateUser);
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
-    }
-});
-
+           res.json({
+             message: 'Customer deactivated successfully',
+              customer
+             });
+             } catch (error) {
+                 res.status(500).json({
+                     message: error.message
+                     });
+                     }
+                     });
+                     
+                     // Activate customer//
+                      router.put('/:id/activate', async (req, res) => {
+                         try { const customer = await user.findOne({ 
+                            _id: req.params.id, role: 'customer'
+                         });
+                          if (!customer) { 
+                            return res.status(404).json({
+                                 message: 'Customer not found'
+                                 });
+                                 }
+                                  customer.status = 'active';
+                                   await customer.save();
+                                    res.json({
+                                         message: 'Customer activated successfully', customer });
+                                         } catch (error) {
+                                             res.status(500).json({
+                                                 message: error.message
+                                                 });
+                                                 } 
+                                                });
 
 // delete the user
 
