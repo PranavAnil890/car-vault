@@ -93,7 +93,7 @@ const DashBoard = () => {
                     <div className="bg-[#0f172a] p-6 rounded-xl">
 
                         <p className="text-slate-400">
-                            Today's Bookings
+                            Bookings
                         </p>
 
                         <h2 className="text-4xl font-bold mt-3">

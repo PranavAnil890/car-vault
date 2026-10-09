@@ -159,10 +159,8 @@ const TimeSlots = () => {
                         >
 
                             <p>
-                                {new Date(
-                                    slot.date
-                                ).toLocaleDateString()}
-                            </p>
+                               {slot.date.split('T')[0].split('-').reverse().join('/')}
+                           </p> 
 
 
                             <p>
