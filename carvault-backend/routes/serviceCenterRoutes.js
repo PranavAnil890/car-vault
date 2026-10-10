@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const ServiceCenter = require('../models/serviceCenter');
+const User = require('../models/user');
 
 
 // Get all service centers
@@ -119,37 +120,62 @@ router.put('/:id', async (req, res) => {
 
 // Delete service center
 
+// Delete service center and its login account
 router.delete('/:id', async (req, res) => {
-
     try {
+        const center = await ServiceCenter.findById(req.params.id);
 
-        const deleteServiceCenter =
-            await ServiceCenter.findByIdAndDelete(
-                req.params.id
-            );
-
-
-        if (!deleteServiceCenter) {
-
+        if (!center) {
             return res.status(404).json({
                 message: 'Service center not found'
             });
-
         }
 
+        // Delete the login account from users collection
+        if (center.userId) {
+            await User.findByIdAndDelete(center.userId);
+        }
+
+        // Delete the profile from serviceCenters collection
+        await ServiceCenter.findByIdAndDelete(req.params.id);
 
         res.json({
-            message: 'Service center deleted successfully'
+            message: 'Service center and login account deleted successfully'
         });
 
     } catch (error) {
-
-        res.status(400).json({
+        res.status(500).json({
             message: error.message
         });
-
     }
+});
 
+
+// Admin confirms service center profile update
+router.put('/:id/confirm-update', async (req, res) => {
+    try {
+        const center = await ServiceCenter.findByIdAndUpdate(
+            req.params.id,
+            { $unset: { profileUpdatedAt: 1 } },
+            { new: true }
+        );
+
+        if (!center) {
+            return res.status(404).json({
+                message: 'Service center not found'
+            });
+        }
+
+        res.json({
+            message: 'Profile update confirmed',
+            center
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
 });
 
 

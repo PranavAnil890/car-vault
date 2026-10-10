@@ -13,7 +13,8 @@ router.get('/', async (req, res) => {
         const bookings = await Booking.find()
             .populate('userId', 'name email phone')
             .populate('vehicleId', 'brand model registrationNumber')
-            .populate('serviceId', 'serviceName price');
+            .populate('serviceId', 'serviceName price')
+            
 
         res.json(bookings);
 

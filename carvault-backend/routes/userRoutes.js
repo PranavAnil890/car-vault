@@ -83,13 +83,16 @@ router.post('/register', async (req, res) => {
 });
 
 
-
-// register service center
+// Register service center
 router.post('/service-center/register', async (req, res) => {
-
     try {
+        const { name, email, password, phone } = req.body;
 
-        const { name, email, password } = req.body;
+        if (!name || !email || !password || !phone) {
+            return res.status(400).json({
+                message: 'Name, email, password and phone are required'
+            });
+        }
 
         const existingUser = await user.findOne({ email });
 
@@ -101,9 +104,11 @@ router.post('/service-center/register', async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // Create service center account
         const newUser = new user({
             name,
             email,
+            phone,
             password: hashedPassword,
             role: 'serviceCenter'
         });
@@ -116,18 +121,20 @@ router.post('/service-center/register', async (req, res) => {
                 id: savedUser._id,
                 name: savedUser.name,
                 email: savedUser.email,
+                phone: savedUser.phone,
                 role: savedUser.role
             }
         });
 
     } catch (error) {
+        console.log('Service center registration error:', error.message);
 
         res.status(400).json({
             message: error.message
         });
-
     }
 });
+
 
 //register the admin
 
