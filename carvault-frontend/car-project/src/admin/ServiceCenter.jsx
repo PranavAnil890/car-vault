@@ -20,7 +20,7 @@ const ServiceCenter = () => {
         pincode: ''
     });
 
-    // Get service centers and customer reviews
+    // Get service centers and reviews
     const getCenters = async () => {
         try {
             const centerRes = await axios.get(
@@ -34,7 +34,7 @@ const ServiceCenter = () => {
             setCenters(centerRes.data);
             setReviews(reviewRes.data);
         } catch (error) {
-            console.log(error);
+            console.error('Error loading service centers:', error);
         }
     };
 
@@ -42,7 +42,7 @@ const ServiceCenter = () => {
         getCenters();
     }, []);
 
-    // Calculate customer rating
+    // Calculate average customer rating
     const getRating = (centerId) => {
         const centerReviews = reviews.filter((review) => {
             const reviewCenterId =
@@ -65,7 +65,7 @@ const ServiceCenter = () => {
         return (total / centerReviews.length).toFixed(1);
     };
 
-    // Input change
+    // Handle input changes
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -73,10 +73,8 @@ const ServiceCenter = () => {
         });
     };
 
-    // Add center
-    const addCenter = () => {
-        setEditId(null);
-
+    // Reset form
+    const resetForm = () => {
         setFormData({
             name: '',
             email: '',
@@ -88,10 +86,17 @@ const ServiceCenter = () => {
             pincode: ''
         });
 
+        setEditId(null);
+        setShowForm(false);
+    };
+
+    // Open add form
+    const addCenter = () => {
+        resetForm();
         setShowForm(true);
     };
 
-    // Edit center
+    // Open edit form
     const editCenter = (center) => {
         setEditId(center._id);
 
@@ -109,66 +114,95 @@ const ServiceCenter = () => {
         setShowForm(true);
     };
 
-    // Create or update center
+    // Create or update service center
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             if (editId) {
+                // Update service center
                 await axios.put(
                     `http://localhost:3000/service-centers/${editId}`,
                     {
-                        name: formData.name,
-                        email: formData.email,
-                        phone: formData.phone,
-                        address: formData.address,
-                        city: formData.city,
-                        state: formData.state,
-                        pincode: formData.pincode
+                        name: formData.name.trim(),
+                        email: formData.email.trim(),
+                        phone: formData.phone.trim(),
+                        address: formData.address.trim(),
+                        city: formData.city.trim(),
+                        state: formData.state.trim(),
+                        pincode: formData.pincode.trim()
                     }
                 );
 
-                alert('Service center updated');
+                alert('Service center updated successfully');
             } else {
+                // Check phone number
+                if (!formData.phone.trim()) {
+                    alert('Please enter the phone number');
+                    return;
+                }
+
+                // Create login account
                 const userRes = await axios.post(
                     'http://localhost:3000/users/service-center/register',
                     {
-                        name: formData.name,
-                        email: formData.email,
-                        password: formData.password
+                        name: formData.name.trim(),
+                        email: formData.email.trim(),
+                        password: formData.password,
+                        phone: formData.phone.trim()
                     }
                 );
 
+                const userId =
+                    userRes.data.user?.id ||
+                    userRes.data.user?._id;
+
+                if (!userId) {
+                    throw new Error(
+                        'User ID was not returned by the registration API'
+                    );
+                }
+
+                // Create service center profile
                 await axios.post(
                     'http://localhost:3000/service-centers',
                     {
-                        name: formData.name,
-                        email: formData.email,
-                        phone: formData.phone,
-                        address: formData.address,
-                        city: formData.city,
-                        state: formData.state,
-                        pincode: formData.pincode,
+                        name: formData.name.trim(),
+                        email: formData.email.trim(),
+                        phone: formData.phone.trim(),
+                        address: formData.address.trim(),
+                        city: formData.city.trim(),
+                        state: formData.state.trim(),
+                        pincode: formData.pincode.trim(),
                         rating: 0,
-                        userId: userRes.data.user.id
+                        userId
                     }
                 );
 
-                alert('Service center created');
+                alert('Service center created successfully');
             }
 
-            setShowForm(false);
-            setEditId(null);
-            getCenters();
+            resetForm();
+            await getCenters();
         } catch (error) {
-            console.log(error);
-            alert(error.response?.data?.message || 'Operation failed');
+            console.error(
+                'Service center error:',
+                error.response?.data || error
+            );
+
+            alert(
+                error.response?.data?.message ||
+                error.message ||
+                'Operation failed'
+            );
         }
     };
 
-    // Delete center
+    // Delete service center
     const deleteCenter = async (id) => {
-        if (!window.confirm('Delete this service center?')) {
+        if (!window.confirm(
+            'Are you sure you want to delete this service center?'
+        )) {
             return;
         }
 
@@ -177,11 +211,53 @@ const ServiceCenter = () => {
                 `http://localhost:3000/service-centers/${id}`
             );
 
-            alert('Service center deleted');
-            getCenters();
+            setCenters((previousCenters) =>
+                previousCenters.filter(
+                    (center) => center._id !== id
+                )
+            );
+
+            if (viewCenter?._id === id) {
+                setViewCenter(null);
+            }
+
+            alert('Service center deleted successfully');
         } catch (error) {
-            console.log(error);
-            alert('Delete failed');
+            console.error(
+                'Delete error:',
+                error.response?.data || error
+            );
+
+            alert(
+                error.response?.data?.message ||
+                'Failed to delete service center'
+            );
+        }
+    };
+
+    // Admin confirms profile update
+    const confirmProfileUpdate = async () => {
+        if (!viewCenter) return;
+
+        try {
+            await axios.put(
+                `http://localhost:3000/service-centers/${viewCenter._id}/confirm-update`
+            );
+
+            alert('Profile update confirmed');
+
+            setViewCenter(null);
+            await getCenters();
+        } catch (error) {
+            console.error(
+                'Confirmation error:',
+                error.response?.data || error
+            );
+
+            alert(
+                error.response?.data?.message ||
+                'Failed to confirm profile update'
+            );
         }
     };
 
@@ -189,17 +265,22 @@ const ServiceCenter = () => {
         <div className="ml-64 min-h-screen bg-[#020617] text-white p-8">
             <div className="max-w-6xl mx-auto">
 
+                {/* Header */}
                 <div className="flex justify-between mb-8">
                     <div>
                         <h1 className="text-3xl font-bold">
                             Service Centers
                         </h1>
+
                         <p className="text-slate-400 mt-2">
                             Manage registered service centers
                         </p>
                     </div>
 
-                    <button onClick={addCenter} className="btn btn-primary">
+                    <button
+                        onClick={addCenter}
+                        className="btn btn-primary"
+                    >
                         + Add Center
                     </button>
                 </div>
@@ -216,30 +297,28 @@ const ServiceCenter = () => {
                                 key={center._id}
                                 className="bg-[#0f172a] p-6 rounded-xl"
                             >
-                                <h2 className="text-xl font-bold">
+                                {/* Name and update warning symbol */}
+                                <h2 className="text-xl font-bold flex items-center gap-2">
                                     {center.name}
+
+                                    {center.profileUpdatedAt && (
+                                        <span
+                                            className="text-yellow-400"
+                                            title="Profile updated — click View to check"
+                                            aria-label="Profile updated"
+                                        >
+                                            ⚠️
+                                        </span>
+                                    )}
                                 </h2>
 
                                 <p className="text-slate-400 mt-2">
                                     {center.city}
                                 </p>
 
-                                {/* Customer average rating */}
                                 <p className="text-yellow-400 mt-2">
                                     ⭐ {getRating(center._id)}
                                 </p>
-
-                                {center.profileUpdatedAt && (
-                                    <p className="text-yellow-400 mt-3">
-                                        ⚠️ Profile Updated
-                                        <br />
-                                        <span className="text-slate-400 text-sm">
-                                            {new Date(
-                                                center.profileUpdatedAt
-                                            ).toLocaleString()}
-                                        </span>
-                                    </p>
-                                )}
 
                                 <div className="flex gap-3 mt-5">
                                     <button
@@ -271,8 +350,8 @@ const ServiceCenter = () => {
 
             {/* View popup */}
             {viewCenter && (
-                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-                    <div className="bg-[#0f172a] p-6 rounded-xl w-full max-w-lg">
+                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+                    <div className="bg-[#0f172a] p-6 rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
                         <h2 className="text-2xl font-bold mb-5">
                             Service Center Details
                         </h2>
@@ -289,6 +368,29 @@ const ServiceCenter = () => {
                             Rating: ⭐ {getRating(viewCenter._id)}
                         </p>
 
+                        {/* Update warning inside View popup */}
+                        {viewCenter.profileUpdatedAt && (
+                            <div className="mt-4 p-4 rounded-lg bg-yellow-500/10">
+                                <p className="text-yellow-400 font-semibold">
+                                    ⚠️ Profile Updated
+                                </p>
+
+                                <p className="text-slate-400 text-sm mt-2">
+                                    Updated at:{' '}
+                                    {new Date(
+                                        viewCenter.profileUpdatedAt
+                                    ).toLocaleString()}
+                                </p>
+
+                                <button
+                                    onClick={confirmProfileUpdate}
+                                    className="btn btn-success btn-sm mt-4"
+                                >
+                                    Confirm Update
+                                </button>
+                            </div>
+                        )}
+
                         <button
                             onClick={() => setViewCenter(null)}
                             className="btn btn-primary w-full mt-6"
@@ -304,7 +406,9 @@ const ServiceCenter = () => {
                 <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
                     <div className="bg-[#0f172a] p-6 rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
                         <h2 className="text-2xl font-bold mb-5">
-                            {editId ? 'Edit Service Center' : 'Add Service Center'}
+                            {editId
+                                ? 'Edit Service Center'
+                                : 'Add Service Center'}
                         </h2>
 
                         <form onSubmit={handleSubmit}>
@@ -341,6 +445,7 @@ const ServiceCenter = () => {
 
                             <input
                                 name="phone"
+                                type="tel"
                                 placeholder="Phone"
                                 value={formData.phone}
                                 onChange={handleChange}
@@ -387,13 +492,16 @@ const ServiceCenter = () => {
                             <div className="flex justify-end gap-3">
                                 <button
                                     type="button"
-                                    onClick={() => setShowForm(false)}
+                                    onClick={resetForm}
                                     className="btn btn-outline"
                                 >
                                     Cancel
                                 </button>
 
-                                <button type="submit" className="btn btn-primary">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                >
                                     {editId ? 'Update' : 'Create'}
                                 </button>
                             </div>
