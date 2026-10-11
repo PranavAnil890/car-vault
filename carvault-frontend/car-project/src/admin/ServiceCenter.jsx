@@ -20,7 +20,6 @@ const ServiceCenter = () => {
         pincode: ''
     });
 
-    // Get service centers and reviews
     const getCenters = async () => {
         try {
             const centerRes = await axios.get(
@@ -42,7 +41,6 @@ const ServiceCenter = () => {
         getCenters();
     }, []);
 
-    // Calculate average customer rating
     const getRating = (centerId) => {
         const centerReviews = reviews.filter((review) => {
             const reviewCenterId =
@@ -65,7 +63,6 @@ const ServiceCenter = () => {
         return (total / centerReviews.length).toFixed(1);
     };
 
-    // Handle input changes
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -90,13 +87,11 @@ const ServiceCenter = () => {
         setShowForm(false);
     };
 
-    // Open add form
     const addCenter = () => {
         resetForm();
         setShowForm(true);
     };
 
-    // Open edit form
     const editCenter = (center) => {
         setEditId(center._id);
 
@@ -114,13 +109,11 @@ const ServiceCenter = () => {
         setShowForm(true);
     };
 
-    // Create or update service center
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             if (editId) {
-                // Update service center
                 await axios.put(
                     `http://localhost:3000/service-centers/${editId}`,
                     {
@@ -136,7 +129,6 @@ const ServiceCenter = () => {
 
                 alert('Service center updated successfully');
             } else {
-                // Check phone number
                 if (!formData.phone.trim()) {
                     alert('Please enter the phone number');
                     return;
@@ -163,7 +155,6 @@ const ServiceCenter = () => {
                     );
                 }
 
-                // Create service center profile
                 await axios.post(
                     'http://localhost:3000/service-centers',
                     {
@@ -198,7 +189,6 @@ const ServiceCenter = () => {
         }
     };
 
-    // Delete service center
     const deleteCenter = async (id) => {
         if (!window.confirm(
             'Are you sure you want to delete this service center?'
@@ -235,7 +225,6 @@ const ServiceCenter = () => {
         }
     };
 
-    // Admin confirms profile update
     const confirmProfileUpdate = async () => {
         if (!viewCenter) return;
 
@@ -265,7 +254,6 @@ const ServiceCenter = () => {
         <div className="ml-64 min-h-screen bg-[#020617] text-white p-8">
             <div className="max-w-6xl mx-auto">
 
-                {/* Header */}
                 <div className="flex justify-between mb-8">
                     <div>
                         <h1 className="text-3xl font-bold">
@@ -285,7 +273,6 @@ const ServiceCenter = () => {
                     </button>
                 </div>
 
-                {/* Service center cards */}
                 {centers.length === 0 ? (
                     <div className="bg-[#0f172a] p-8 rounded-xl text-center">
                         No service centers found.
@@ -297,7 +284,6 @@ const ServiceCenter = () => {
                                 key={center._id}
                                 className="bg-[#0f172a] p-6 rounded-xl"
                             >
-                                {/* Name and update warning symbol */}
                                 <h2 className="text-xl font-bold flex items-center gap-2">
                                     {center.name}
 
@@ -348,7 +334,6 @@ const ServiceCenter = () => {
                 )}
             </div>
 
-            {/* View popup */}
             {viewCenter && (
                 <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
                     <div className="bg-[#0f172a] p-6 rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
@@ -368,7 +353,6 @@ const ServiceCenter = () => {
                             Rating: ⭐ {getRating(viewCenter._id)}
                         </p>
 
-                        {/* Update warning inside View popup */}
                         {viewCenter.profileUpdatedAt && (
                             <div className="mt-4 p-4 rounded-lg bg-yellow-500/10">
                                 <p className="text-yellow-400 font-semibold">
@@ -401,7 +385,6 @@ const ServiceCenter = () => {
                 </div>
             )}
 
-            {/* Add / Edit popup */}
             {showForm && (
                 <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
                     <div className="bg-[#0f172a] p-6 rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">

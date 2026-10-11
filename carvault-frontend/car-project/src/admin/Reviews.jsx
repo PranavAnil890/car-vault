@@ -8,7 +8,6 @@ const Reviews = () => {
     const [services, setServices] = useState([]);
     const [serviceCenters, setServiceCenters] = useState([]);
 
-    // Get all data
     const getReviews = async () => {
         try {
             const reviewRes = await axios.get('http://localhost:3000/review');
@@ -29,12 +28,10 @@ const Reviews = () => {
         getReviews();
     }, []);
 
-    // Get ID from string or object
     const getId = (value) => {
         return typeof value === 'object' ? value?._id : value;
     };
 
-    // Delete review
     const deleteReview = async (id) => {
         if (!window.confirm('Delete this review?')) return;
 

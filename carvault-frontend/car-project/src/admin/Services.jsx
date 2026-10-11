@@ -12,7 +12,6 @@ const Services = () => {
         price: ''
     });
 
-    // Get services and service centers
     const getData = async () => {
         try {
             const serviceResponse = await axios.get(
@@ -38,7 +37,6 @@ const Services = () => {
         getData();
     }, []);
 
-    // Find service center name
     const getCenterName = (serviceCenterId) => {
         const id =
             typeof serviceCenterId === 'object'
@@ -55,15 +53,12 @@ const Services = () => {
         return center?.name || center?.centerName || 'Service Center';
     };
 
-    // Handle input changes
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
-
-    // Edit service
     const handleEdit = (service) => {
         setEditId(service._id);
 
@@ -73,7 +68,6 @@ const Services = () => {
         });
     };
 
-    // Update service
     const handleUpdate = async (e) => {
         e.preventDefault();
 
@@ -111,7 +105,6 @@ const Services = () => {
         }
     };
 
-    // Delete service
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm(
             'Are you sure you want to delete this service?'
@@ -126,14 +119,12 @@ const Services = () => {
                 `http://localhost:3000/services/${id}`
             );
 
-            // Remove service immediately from the page
             setServices((previous) =>
                 previous.filter(
                     (service) => service._id !== id
                 )
             );
 
-            // Close edit form if this service was being edited
             if (editId === id) {
                 setEditId(null);
 
@@ -148,7 +139,6 @@ const Services = () => {
                 'Service deleted successfully'
             );
 
-            // Reload data from backend
             await getData();
         } catch (error) {
             console.log(
@@ -167,7 +157,6 @@ const Services = () => {
         <div className="ml-64 min-h-screen bg-[#020617] text-white p-8">
             <div className="max-w-7xl mx-auto">
 
-                {/* Page heading */}
                 <h1 className="text-3xl font-bold mb-2">
                     All Services
                 </h1>
@@ -176,7 +165,6 @@ const Services = () => {
                     View and manage services provided by service centers
                 </p>
 
-                {/* Edit Form */}
                 {editId && (
                     <div className="bg-[#0f172a] border border-slate-800 rounded-xl p-6 mb-8">
 
@@ -188,7 +176,6 @@ const Services = () => {
                             onSubmit={handleUpdate}
                             className="grid grid-cols-1 md:grid-cols-2 gap-5"
                         >
-                            {/* Service name */}
                             <div>
                                 <label className="block text-slate-300 mb-2">
                                     Service Name
@@ -204,7 +191,7 @@ const Services = () => {
                                 />
                             </div>
 
-                            {/* Price */}
+
                             <div>
                                 <label className="block text-slate-300 mb-2">
                                     Price
@@ -221,7 +208,6 @@ const Services = () => {
                                 />
                             </div>
 
-                            {/* Buttons */}
                             <div className="md:col-span-2 flex gap-3">
                                 <button
                                     type="submit"
@@ -249,7 +235,6 @@ const Services = () => {
                     </div>
                 )}
 
-                {/* Services Table */}
                 <div className="bg-[#0f172a] border border-slate-800 rounded-xl overflow-x-auto">
 
                     <table className="w-full min-w-[800px]">
@@ -283,24 +268,20 @@ const Services = () => {
                                     key={service._id}
                                     className="border-t border-slate-800"
                                 >
-                                    {/* Service name */}
                                     <td className="p-4 font-medium">
                                         {service.serviceName}
                                     </td>
 
-                                    {/* Service center */}
                                     <td className="p-4 text-slate-300">
                                         {getCenterName(
                                             service.serviceCenterId
                                         )}
                                     </td>
 
-                                    {/* Price */}
                                     <td className="p-4">
                                         ₹{service.price}
                                     </td>
 
-                                    {/* Status */}
                                     <td className="p-4">
                                         <span
                                             className={
@@ -313,7 +294,6 @@ const Services = () => {
                                         </span>
                                     </td>
 
-                                    {/* Actions */}
                                     <td className="p-4">
                                         <div className="flex gap-2">
 
@@ -344,7 +324,6 @@ const Services = () => {
                         </tbody>
                     </table>
 
-                    {/* Empty list */}
                     {services.length === 0 && (
                         <div className="text-center py-10 text-slate-400">
                             No services found

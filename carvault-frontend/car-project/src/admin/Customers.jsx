@@ -7,7 +7,6 @@ const Customers = () => {
     const [search, setSearch] = useState('');
     const [selectedCustomer, setSelectedCustomer] = useState(null);
 
-    // Get all customers
     const getCustomers = async () => {
         try {
             const response = await axios.get(
@@ -20,7 +19,6 @@ const Customers = () => {
 
             setCustomers(customerUsers);
 
-            // Refresh selected customer details
             setSelectedCustomer((previous) => {
                 if (!previous) return null;
 
@@ -41,7 +39,6 @@ const Customers = () => {
         getCustomers();
     }, []);
 
-    // Deactivate customer
     const deactivateCustomer = async (id) => {
         const confirmDeactivate = window.confirm(
             'Are you sure you want to deactivate this customer?'
@@ -58,7 +55,6 @@ const Customers = () => {
 
             alert(response.data.message);
 
-            // Reload customers from database
             await getCustomers();
         } catch (error) {
             console.log(
@@ -72,7 +68,7 @@ const Customers = () => {
         }
     };
 
-    // Activate customer
+
     const activateCustomer = async (id) => {
         try {
             const response = await axios.put(
@@ -81,7 +77,6 @@ const Customers = () => {
 
             alert(response.data.message);
 
-            // Reload customers from database
             await getCustomers();
         } catch (error) {
             console.log(
@@ -138,7 +133,6 @@ const Customers = () => {
         }
     };
 
-    // Search customers by name or email
     const filteredCustomers = customers.filter((customer) =>
         `${customer.name || ''} ${customer.email || ''}`
             .toLowerCase()
@@ -149,7 +143,6 @@ const Customers = () => {
         <div className="ml-64 min-h-screen bg-[#020617] text-white p-8">
             <div className="max-w-7xl mx-auto">
 
-                {/* Page heading */}
                 <h1 className="text-3xl font-bold">
                     Customers
                 </h1>
@@ -158,7 +151,6 @@ const Customers = () => {
                     View, search and manage registered customers
                 </p>
 
-                {/* Search */}
                 <input
                     type="text"
                     placeholder="Search by name or email..."
@@ -167,7 +159,6 @@ const Customers = () => {
                     className="input input-bordered w-full max-w-xl bg-[#0f172a] text-white mb-8"
                 />
 
-                {/* Selected customer details */}
                 {selectedCustomer && (
                     <div className="bg-[#0f172a] border border-blue-900/50 rounded-xl p-6 mb-8">
 
@@ -217,10 +208,7 @@ const Customers = () => {
                     </div>
                 )}
 
-                {/* Customer table */}
                 <div className="bg-[#0f172a] rounded-xl border border-blue-900/30 overflow-x-auto">
-
-                    {/* Table headings */}
                     <div className="min-w-[1000px] grid grid-cols-5 p-5 border-b border-slate-700 font-semibold">
                         <p>Name</p>
                         <p>Email</p>
@@ -229,7 +217,6 @@ const Customers = () => {
                         <p>Actions</p>
                     </div>
 
-                    {/* Customer list */}
                     {filteredCustomers.length === 0 ? (
                         <p className="p-6 text-slate-400">
                             No customers found.
@@ -240,22 +227,18 @@ const Customers = () => {
                                 key={customer._id}
                                 className="min-w-[1000px] grid grid-cols-5 items-center p-5 border-b border-slate-700"
                             >
-                                {/* Name */}
                                 <p>
                                     {customer.name}
                                 </p>
 
-                                {/* Email */}
                                 <p className="text-slate-300">
                                     {customer.email}
                                 </p>
 
-                                {/* Role */}
                                 <p className="text-blue-400">
                                     {customer.role}
                                 </p>
 
-                                {/* Status */}
                                 <p>
                                     <span
                                         className={
@@ -270,10 +253,8 @@ const Customers = () => {
                                     </span>
                                 </p>
 
-                                {/* Action buttons */}
                                 <div className="flex gap-2 flex-wrap">
 
-                                    {/* View */}
                                     <button
                                         onClick={() =>
                                             setSelectedCustomer(customer)
@@ -283,7 +264,6 @@ const Customers = () => {
                                         View
                                     </button>
 
-                                    {/* Activate or Deactivate */}
                                     {customer.status === 'inactive' ? (
                                         <button
                                             onClick={() =>
@@ -304,7 +284,6 @@ const Customers = () => {
                                         </button>
                                     )}
 
-                                    {/* Delete */}
                                     <button
                                         onClick={() =>
                                             deleteCustomer(customer._id)

@@ -43,10 +43,8 @@ const Dashboard = () => {
 
             const bookingData = bookingsResponse.data;
 
-            // Save service centers
             setCentersList(centersResponse.data);
 
-            // Dashboard statistics
             setCustomers(customerUsers.length);
             setCenters(centersResponse.data.length);
             setServices(servicesResponse.data.length);
@@ -54,7 +52,6 @@ const Dashboard = () => {
             setReviews(reviewsResponse.data.length);
             setVehicles(vehiclesResponse.data.length);
 
-            // Booking status counts
             setPending(
                 bookingData.filter(
                     booking => booking.status === 'Pending'
@@ -79,7 +76,6 @@ const Dashboard = () => {
                 ).length
             );
 
-            // Get the latest five bookings
             const latestBookings = [...bookingData]
                 .sort((a, b) => {
                     const dateA = new Date(
@@ -109,12 +105,11 @@ const Dashboard = () => {
         return () => clearInterval(interval);
     }, []);
 
-    // Get service center name
+
     const getServiceCenterName = (booking) => {
         const centerId = booking.serviceCenterId?._id
             || booking.serviceCenterId;
 
-        // If the booking API already returns the center name
         if (
             booking.serviceCenterId &&
             typeof booking.serviceCenterId === 'object' &&
@@ -123,7 +118,6 @@ const Dashboard = () => {
             return booking.serviceCenterId.name;
         }
 
-        // Find the center using its actual document ID
         const center = centersList.find(
             item => String(item._id) === String(centerId)
         );
@@ -135,7 +129,6 @@ const Dashboard = () => {
         <div className="ml-64 min-h-screen bg-[#020617] text-white p-8">
             <div className="max-w-7xl mx-auto">
 
-                {/* Heading */}
                 <div className="text-center mb-10">
                     <h1 className="text-3xl font-bold">
                         ADMIN DASHBOARD
@@ -146,7 +139,6 @@ const Dashboard = () => {
                     </p>
                 </div>
 
-                {/* Statistics */}
                 <h2 className="text-2xl font-bold mb-5">
                     CarVault Statistics
                 </h2>
@@ -175,7 +167,6 @@ const Dashboard = () => {
                     ))}
                 </div>
 
-                {/* Booking Analytics */}
                 <h2 className="text-2xl font-bold mb-5">
                     Booking Analytics
                 </h2>
@@ -222,7 +213,6 @@ const Dashboard = () => {
                     ))}
                 </div>
 
-                {/* Service Transactions */}
                 <h2 className="text-2xl font-bold mb-5">
                     Service Transactions
                 </h2>
@@ -291,7 +281,6 @@ const Dashboard = () => {
                     </table>
                 </div>
 
-                {/* Recent System Activities */}
                 <h2 className="text-2xl font-bold mb-5">
                     Recent System Activities
                 </h2>
