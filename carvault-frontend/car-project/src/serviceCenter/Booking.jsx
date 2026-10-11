@@ -13,7 +13,7 @@ const Booking = () => {
         try {
 
             const response = await axios.get(
-                'http://localhost:3000/booking'
+                '/booking'
             );
 
             const myBookings = response.data.filter(
@@ -46,7 +46,7 @@ const Booking = () => {
         try {
 
             await axios.put(
-                `http://localhost:3000/booking/${id}`,
+                `/booking/${id}`,
                 {
                     status: status
                 }
@@ -73,7 +73,7 @@ const Booking = () => {
         try {
 
             await axios.delete(
-                `http://localhost:3000/booking/${id}`
+                `/booking/${id}`
             );
 
             alert('Booking deleted');

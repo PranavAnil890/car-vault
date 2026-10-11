@@ -18,7 +18,7 @@ const Reviews = () => {
     const getServices = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/services'
+                '/services'
             );
             setServices(response.data);
         } catch (error) {
@@ -30,7 +30,7 @@ const Reviews = () => {
     const getBookings = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/booking'
+                '/booking'
             );
             setBookings(response.data);
         } catch (error) {
@@ -42,7 +42,7 @@ const Reviews = () => {
     const getReviews = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/review'
+                '/review'
             );
 
             const myReviews = response.data.filter(
@@ -120,7 +120,7 @@ const Reviews = () => {
                     : booking.serviceCenterId;
 
             await axios.post(
-                'http://localhost:3000/review',
+                '/review',
                 {
                     userId: userId,
                     bookingId: booking._id,

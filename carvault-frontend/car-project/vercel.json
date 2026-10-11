@@ -1,0 +1,41 @@
+
+{
+  "rewrites": [
+    {
+      "source": "/users/:path*",
+      "destination": "https://car-vault-1.onrender.com/users/:path*"
+    },
+    {
+      "source": "/vehicles/:path*",
+      "destination": "https://car-vault-1.onrender.com/vehicles/:path*"
+    },
+    {
+      "source": "/services/:path*",
+      "destination": "https://car-vault-1.onrender.com/services/:path*"
+    },
+    {
+      "source": "/service-centers/:path*",
+      "destination": "https://car-vault-1.onrender.com/service-centers/:path*"
+    },
+    {
+      "source": "/time-slots/:path*",
+      "destination": "https://car-vault-1.onrender.com/time-slots/:path*"
+    },
+    {
+      "source": "/booking/:path*",
+      "destination": "https://car-vault-1.onrender.com/booking/:path*"
+    },
+    {
+      "source": "/review/:path*",
+      "destination": "https://car-vault-1.onrender.com/review/:path*"
+    },
+    {
+      "source": "/service-history/:path*",
+      "destination": "https://car-vault-1.onrender.com/service-history/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

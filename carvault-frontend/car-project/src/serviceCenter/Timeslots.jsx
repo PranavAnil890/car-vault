@@ -19,7 +19,7 @@ const TimeSlots = () => {
         try {
 
             const response = await axios.get(
-                'http://localhost:3000/time-slots'
+                '/time-slots'
             );
 
             const mySlots = response.data.filter(
@@ -64,7 +64,7 @@ const TimeSlots = () => {
         try {
 
             await axios.post(
-                'http://localhost:3000/time-slots',
+                '/time-slots',
                 {
                     date: formData.date,
                     time: formData.time,
@@ -96,7 +96,7 @@ const TimeSlots = () => {
         try {
 
             await axios.delete(
-                `http://localhost:3000/time-slots/${id}`
+                `/time-slots/${id}`
             );
 
             getSlots();

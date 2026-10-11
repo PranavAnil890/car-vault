@@ -11,11 +11,11 @@ const Bookings = () => {
         try {
 
             const bookingsResponse = await axios.get(
-                'http://localhost:3000/booking'
+                '/booking'
             );
 
             const centersResponse = await axios.get(
-                'http://localhost:3000/service-centers'
+                '/service-centers'
             );
 
             setBookings(bookingsResponse.data);

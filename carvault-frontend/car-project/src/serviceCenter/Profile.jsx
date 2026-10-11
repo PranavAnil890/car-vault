@@ -11,7 +11,7 @@ const Profile = () => {
     // Get profile
     useEffect(() => {
 
-        axios.get('http://localhost:3000/service-centers')
+        axios.get('/service-centers')
             .then((response) => {
 
                 const data = response.data.find(
@@ -45,7 +45,7 @@ const Profile = () => {
         try {
 
             const response = await axios.put(
-                `http://localhost:3000/service-centers/${profile._id}`,
+                `/service-centers/${profile._id}`,
                 profile
             );
 

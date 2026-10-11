@@ -15,11 +15,11 @@ const Services = () => {
     const getData = async () => {
         try {
             const serviceResponse = await axios.get(
-                'http://localhost:3000/services'
+                '/services'
             );
 
             const centerResponse = await axios.get(
-                'http://localhost:3000/service-centers'
+                '/service-centers'
             );
 
             setServices(serviceResponse.data);
@@ -73,7 +73,7 @@ const Services = () => {
 
         try {
             const response = await axios.put(
-                `http://localhost:3000/services/${editId}`,
+                `/services/${editId}`,
                 {
                     serviceName: formData.name,
                     price: Number(formData.price)
@@ -116,7 +116,7 @@ const Services = () => {
 
         try {
             const response = await axios.delete(
-                `http://localhost:3000/services/${id}`
+                `/services/${id}`
             );
 
             setServices((previous) =>

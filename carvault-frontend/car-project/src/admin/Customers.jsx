@@ -10,7 +10,7 @@ const Customers = () => {
     const getCustomers = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/users'
+                '/users'
             );
 
             const customerUsers = response.data.filter(
@@ -50,7 +50,7 @@ const Customers = () => {
 
         try {
             const response = await axios.put(
-                `http://localhost:3000/users/${id}/deactivate`
+                `/users/${id}/deactivate`
             );
 
             alert(response.data.message);
@@ -72,7 +72,7 @@ const Customers = () => {
     const activateCustomer = async (id) => {
         try {
             const response = await axios.put(
-                `http://localhost:3000/users/${id}/activate`
+                `/users/${id}/activate`
             );
 
             alert(response.data.message);
@@ -102,7 +102,7 @@ const Customers = () => {
 
         try {
             const response = await axios.delete(
-                `http://localhost:3000/users/${id}`
+                `/users/${id}`
             );
 
             // Remove deleted customer from the page

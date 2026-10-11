@@ -11,7 +11,7 @@ const DashBoard = () => {
     useEffect(() => {
 
         // Get services
-        axios.get('http://localhost:3000/services')
+        axios.get('/services')
             .then((response) => {
 
                 const myServices = response.data.filter(
@@ -29,7 +29,7 @@ const DashBoard = () => {
 
 
         // Get bookings
-        axios.get('http://localhost:3000/booking')
+        axios.get('/booking')
             .then((response) => {
 
                 const myBookings = response.data.filter(

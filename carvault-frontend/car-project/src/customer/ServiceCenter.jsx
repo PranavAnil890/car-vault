@@ -21,7 +21,7 @@ const ServiceCenters = () => {
         try {
 
             const response = await axios.get(
-                'http://localhost:3000/service-centers'
+                '/service-centers'
             );
 
             setServiceCenters(response.data);
@@ -42,7 +42,7 @@ const ServiceCenters = () => {
         try {
 
             const response = await axios.get(
-                'http://localhost:3000/review'
+                '/review'
             );
 
             setReviews(response.data);
@@ -73,7 +73,7 @@ const ServiceCenters = () => {
         try {
 
             const response = await axios.get(
-                'http://localhost:3000/services'
+                '/services'
             );
 
             const centerServices = response.data.filter(

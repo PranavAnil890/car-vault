@@ -21,7 +21,7 @@ const Services = () => {
     const getServices = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/services'
+                '/services'
             );
 
             const myServices = response.data.filter((service) => {
@@ -102,7 +102,7 @@ const Services = () => {
         try {
             if (editId) {
                 await axios.put(
-                    `http://localhost:3000/services/${editId}`,
+                    `/services/${editId}`,
                     data
                 );
 
@@ -110,7 +110,7 @@ const Services = () => {
 
             } else {
                 await axios.post(
-                    'http://localhost:3000/services',
+                    '/services',
                     data
                 );
 
@@ -139,7 +139,7 @@ const Services = () => {
 
         try {
             await axios.delete(
-                `http://localhost:3000/services/${id}`
+                `/services/${id}`
             );
 
             // Remove service from the page immediately

@@ -29,7 +29,7 @@ const Vehicles = () => {
         try {
 
             const response = await axios.get(
-                'http://localhost:3000/vehicles'
+                '/vehicles'
             );
 
             const myVehicles = response.data.filter(
@@ -140,7 +140,7 @@ const Vehicles = () => {
             if (editId) {
 
                 await axios.put(
-                    `http://localhost:3000/vehicles/${editId}`,
+                    `/vehicles/${editId}`,
                     vehicleData
                 );
 
@@ -149,7 +149,7 @@ const Vehicles = () => {
             } else {
 
                 await axios.post(
-                    'http://localhost:3000/vehicles',
+                    '/vehicles',
                     vehicleData
                 );
 
@@ -183,7 +183,7 @@ const Vehicles = () => {
         try {
 
             await axios.delete(
-                `http://localhost:3000/vehicles/${id}`
+                `/vehicles/${id}`
             );
 
             alert('Vehicle deleted successfully');

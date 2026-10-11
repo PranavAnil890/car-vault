@@ -17,15 +17,15 @@ const Reviews = () => {
         try {
 
             const reviewResponse = await axios.get(
-                'http://localhost:3000/review'
+                '/review'
             );
 
             const userResponse = await axios.get(
-                'http://localhost:3000/users'
+                '/users'
             );
 
             const serviceResponse = await axios.get(
-                'http://localhost:3000/services'
+                '/services'
             );
 
 

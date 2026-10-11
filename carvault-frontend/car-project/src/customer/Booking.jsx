@@ -22,7 +22,7 @@ const Booking = () => {
 
         if (location.pathname === '/customer/bookings') {
 
-            axios.get('http://localhost:3000/booking')
+            axios.get('/booking')
                 .then(response => {
 
                     const data = response.data.filter(
@@ -46,7 +46,7 @@ const Booking = () => {
 
         if (location.pathname === '/customer/bookings/new') {
 
-            axios.get('http://localhost:3000/time-slots')
+            axios.get('/time-slots')
                 .then(response => {
 
                     const data = response.data.filter(
@@ -82,7 +82,7 @@ const Booking = () => {
         try {
 
             await axios.post(
-                'http://localhost:3000/booking',
+                '/booking',
                 {
                     userId: user.id,
                     vehicleId: vehicle._id,
@@ -95,7 +95,7 @@ const Booking = () => {
             );
 
             await axios.put(
-                `http://localhost:3000/time-slots/${slot._id}`,
+                `/time-slots/${slot._id}`,
                 {
                     isBooked: true
                 }

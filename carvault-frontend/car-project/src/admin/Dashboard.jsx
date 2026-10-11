@@ -29,12 +29,12 @@ const Dashboard = () => {
                 reviewsResponse,
                 vehiclesResponse
             ] = await Promise.all([
-                axios.get('http://localhost:3000/users'),
-                axios.get('http://localhost:3000/service-centers'),
-                axios.get('http://localhost:3000/services'),
-                axios.get('http://localhost:3000/booking'),
-                axios.get('http://localhost:3000/review'),
-                axios.get('http://localhost:3000/vehicles')
+                axios.get('/users'),
+                axios.get('/service-centers'),
+                axios.get('/services'),
+                axios.get('/booking'),
+                axios.get('/review'),
+                axios.get('/vehicles')
             ]);
 
             const customerUsers = customersResponse.data.filter(

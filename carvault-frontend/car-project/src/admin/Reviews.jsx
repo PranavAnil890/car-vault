@@ -10,10 +10,10 @@ const Reviews = () => {
 
     const getReviews = async () => {
         try {
-            const reviewRes = await axios.get('http://localhost:3000/review');
-            const userRes = await axios.get('http://localhost:3000/users');
-            const serviceRes = await axios.get('http://localhost:3000/services');
-            const centerRes = await axios.get('http://localhost:3000/service-centers');
+            const reviewRes = await axios.get('/review');
+            const userRes = await axios.get('/users');
+            const serviceRes = await axios.get('/services');
+            const centerRes = await axios.get('/service-centers');
 
             setReviews(reviewRes.data);
             setUsers(userRes.data);
@@ -36,7 +36,7 @@ const Reviews = () => {
         if (!window.confirm('Delete this review?')) return;
 
         try {
-            await axios.delete(`http://localhost:3000/review/${id}`);
+            await axios.delete(`/review/${id}`);
             alert('Review deleted');
             getReviews();
         } catch (error) {

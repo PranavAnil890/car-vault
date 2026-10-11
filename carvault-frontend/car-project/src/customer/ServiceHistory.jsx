@@ -18,19 +18,19 @@ const ServiceHistory = () => {
         try {
 
             const historyResponse = await axios.get(
-                'http://localhost:3000/service-history'
+                '/service-history'
             );
 
             const vehicleResponse = await axios.get(
-                'http://localhost:3000/vehicles'
+                '/vehicles'
             );
 
             const serviceResponse = await axios.get(
-                'http://localhost:3000/services'
+                '/services'
             );
 
             const centerResponse = await axios.get(
-                'http://localhost:3000/service-centers'
+                '/service-centers'
             );
 
 

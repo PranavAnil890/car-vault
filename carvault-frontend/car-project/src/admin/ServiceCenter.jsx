@@ -23,11 +23,11 @@ const ServiceCenter = () => {
     const getCenters = async () => {
         try {
             const centerRes = await axios.get(
-                'http://localhost:3000/service-centers'
+                '/service-centers'
             );
 
             const reviewRes = await axios.get(
-                'http://localhost:3000/review'
+                '/review'
             );
 
             setCenters(centerRes.data);
@@ -115,7 +115,7 @@ const ServiceCenter = () => {
         try {
             if (editId) {
                 await axios.put(
-                    `http://localhost:3000/service-centers/${editId}`,
+                    `/service-centers/${editId}`,
                     {
                         name: formData.name.trim(),
                         email: formData.email.trim(),
@@ -136,7 +136,7 @@ const ServiceCenter = () => {
 
                 // Create login account
                 const userRes = await axios.post(
-                    'http://localhost:3000/users/service-center/register',
+                    '/users/service-center/register',
                     {
                         name: formData.name.trim(),
                         email: formData.email.trim(),
@@ -156,7 +156,7 @@ const ServiceCenter = () => {
                 }
 
                 await axios.post(
-                    'http://localhost:3000/service-centers',
+                    '/service-centers',
                     {
                         name: formData.name.trim(),
                         email: formData.email.trim(),
@@ -198,7 +198,7 @@ const ServiceCenter = () => {
 
         try {
             await axios.delete(
-                `http://localhost:3000/service-centers/${id}`
+                `/service-centers/${id}`
             );
 
             setCenters((previousCenters) =>
@@ -230,7 +230,7 @@ const ServiceCenter = () => {
 
         try {
             await axios.put(
-                `http://localhost:3000/service-centers/${viewCenter._id}/confirm-update`
+                `/service-centers/${viewCenter._id}/confirm-update`
             );
 
             alert('Profile update confirmed');
