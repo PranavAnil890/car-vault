@@ -48,12 +48,6 @@ CarVault is a MERN Stack-based web application designed to simplify car ownershi
 
 ## ⚙️ Installation and Setup
 
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/PranavAnil890/car-vault.git
-```
-
 ### 2. Backend Setup
 
 ```bash
