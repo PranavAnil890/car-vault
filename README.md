@@ -72,15 +72,7 @@ npm install
 npm run dev
 ```
 
-## 🔐 Environment Variables
-
-Create a `.env` file in the backend folder and configure:
-
-```env
-PORT=3000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-```
+## 🔐 Environment 
 
 ## 📌 Project Status
 
